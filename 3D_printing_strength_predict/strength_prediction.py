@@ -85,7 +85,7 @@ def preprocess_input_data(input_df, feature_columns):
 
 def predict_tension_strength(input_file_path='FDM_Dataset.csv'):
     """
-    预测3D打印件的张力强度
+    预测3D打印件的拉伸强度
     """
     # 加载模型和预处理器
     sgd_model, svr_model, nn_model, feature_columns, minmax_scaler = load_models()
@@ -107,12 +107,11 @@ def predict_tension_strength(input_file_path='FDM_Dataset.csv'):
     processed_data = preprocess_input_data(input_data, feature_columns)
     print(f"预处理后数据形状: {processed_data.shape}")
 
-    # --- 关键步骤：对数据进行缩放 ---
-    # SGD和SVR的Pipeline会自动缩放，但我们显式地为DNN做一次
+    # 对数据进行缩放
     processed_data_scaled = minmax_scaler.transform(processed_data)
 
     # 进行预测
-    # SGD和SVR: Pipeline内部会自动缩放
+    # SGD和SVR
     sgd_predictions = sgd_model.predict(processed_data)
     svr_predictions = svr_model.predict(processed_data)
 

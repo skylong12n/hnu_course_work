@@ -4,7 +4,7 @@
 import numpy as np
 import pandas as pd
 
-# 获取数据（从本地文件）
+# 获取数据
 manufacture = pd.read_csv('manufacturing.txt')
 
 # 如何访问数据框中的内容
@@ -186,7 +186,7 @@ from sklearn.model_selection import cross_val_score
 from sklearn.metrics import explained_variance_score
 
 # 使用之前分割好的数据集
-X_train = X_man_train # 重命名变量以匹配您的逻辑
+X_train = X_man_train # 重命名变量
 X_test = X_man_test
 y_train = y_man_train
 y_test = y_man_test
@@ -195,7 +195,7 @@ y_test = y_man_test
 sgd = SGDRegressor(random_state=42, max_iter=1000) # 保持与Pipeline中一致的参数
 svr = SVR(kernel="rbf", C=100, gamma=0.1, epsilon=0.1) # 保持与Pipeline中一致的参数
 
-# 为了使SGD和SVR能正确处理数据，需要先进行相同的预处理（如缩放）
+# 预处理
 from sklearn.preprocessing import MinMaxScaler
 scaler = MinMaxScaler()
 X_train_scaled = scaler.fit_transform(X_train)
@@ -216,13 +216,9 @@ explained_variance_svr = explained_variance_score(y_test, y_pred_svr)
 print(f"SGD模型的解释方差得分: {explained_variance_sgd}")
 print(f"SVR模型的解释方差得分: {explained_variance_svr}")
 
-# 如果想要通过交叉验证来评估模型性能，可以使用cross_val_score函数
-# 注意：对于交叉验证，需要对整个数据集进行预处理，这里我们直接使用之前的Pipeline
+# 交叉验证
 cv_scores_sgd_pipeline = cross_validate(pipe_man, X_man, y_man, cv=5, scoring='explained_variance', return_train_score=False, return_estimator=False)
 cv_scores_svr_pipeline = cross_validate(pipe_man_non, X_man, y_man, cv=5, scoring='explained_variance', return_train_score=False, return_estimator=False)
 
 print(f"SGD模型的交叉验证解释方差得分 (使用Pipeline): {cv_scores_sgd_pipeline['test_score'].mean()} (+/- {cv_scores_sgd_pipeline['test_score'].std() * 2})")
 print(f"SVR模型的交叉验证解释方差得分 (使用Pipeline): {cv_scores_svr_pipeline['test_score'].mean()} (+/- {cv_scores_svr_pipeline['test_score'].std() * 2})")
-
-# 对于手动预处理后的模型，也可以进行交叉验证，但需要更复杂的处理（例如使用交叉验证迭代器手动缩放数据）
-# 这里我们只展示使用Pipeline的结果，因为它更标准且易于实现

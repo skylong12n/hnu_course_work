@@ -35,7 +35,7 @@ plt.rcParams['font.sans-serif'] = ['SimHei', 'DejaVu Sans']  # 用来正常显�
 plt.rcParams['axes.unicode_minus'] = False  # 用来正常显示负号
 plt.rcParams['font.size'] = 10  # 设置字体大小
 
-# 绘制拉伸性能、层高、壁厚、填充密度的趋势图（黑白版）
+# 绘制拉伸性能、层高、壁厚、填充密度的趋势图
 fig, axes = plt.subplots(2, 2, figsize=(15, 10))
 fig.suptitle('参数趋势图', fontsize=14)
 
@@ -53,7 +53,7 @@ for i, col in enumerate(columns_to_plot):
 plt.tight_layout()
 plt.show()
 
-# 绘制打印温度、床温、打印速度、风扇速度的趋势图（黑白版）
+# 绘制打印温度、床温、打印速度、风扇速度的趋势图
 fig, axes = plt.subplots(2, 2, figsize=(15, 10))
 fig.suptitle('打印参数趋势图', fontsize=14)
 
@@ -70,7 +70,7 @@ for i, col in enumerate(temp_columns):
 plt.tight_layout()
 plt.show()
 
-# 绘制粗糙度和拉伸强度的趋势图（黑白版）
+# 绘制粗糙度和拉伸强度的趋势图
 fig, axes = plt.subplots(1, 2, figsize=(15, 5))
 fig.suptitle('表面质量和强度趋势图', fontsize=14)
 
@@ -94,7 +94,7 @@ else:
 plt.tight_layout()
 plt.show()
 
-# 绘制材料类型饼图（黑白版）
+# 绘制材料类型饼图
 material_col = 'Material' if 'Material' in df.columns else 'material' if 'material' in df.columns else None
 if material_col and material_col in df.columns:
     plt.figure(figsize=(8, 8))
@@ -104,7 +104,7 @@ if material_col and material_col in df.columns:
     plt.title('材料类型分布', fontsize=14)
     plt.show()
 
-# 绘制数据分布直方图（黑白版，调整布局）
+# 绘制数据分布直方图
 numeric_cols = df.select_dtypes(include=['number']).columns.tolist()
 if numeric_cols:
     n_cols = min(4, len(numeric_cols))  # 最多4列
@@ -134,7 +134,7 @@ if numeric_cols:
     plt.tight_layout()
     plt.show()
 
-# 绘制相关性热力图（黑白版）
+# 绘制相关性热力图
 numeric_df = df.select_dtypes(include=['number'])
 if not numeric_df.empty:
     plt.figure(figsize=(10, 8))
@@ -158,7 +158,7 @@ if target_col:
     print(Y.head())
 else:
     print("\n没有找到合适的目标变量列")
-    # 如果没有找到合适的分类列，我们使用tension_strength作为回归目标
+    # 如果没有找到合适的分类列，使用tension_strength作为回归目标
     for col in ['tension_strength', 'Tension_strenght']:
         if col in df.columns:
             target_col = col
@@ -182,7 +182,7 @@ le = LabelEncoder()
 # 对分类特征进行标签编码
 categorical_cols = df.select_dtypes(include=['object']).columns
 for col in categorical_cols:
-    if col != target_col:  # 不对目标变量进行编码（如果目标变量是分类的，会在后面处理）
+    if col != target_col:  # 不对目标变量进行编码
         X = X.join(df[[col]])  # 将分类列加入特征矩阵
         X[col] = le.fit_transform(df[col])
 
