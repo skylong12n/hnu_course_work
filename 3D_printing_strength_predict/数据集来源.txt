@@ -1,0 +1,2 @@
+训练数据集：https://www.kaggle.com/datasets/shubhamgupta012/3d-printer-material-requirement/data
+预测数据集：https://www.kaggle.com/datasets/ziya07/fdm-3d-printed-composite-material-prediction-data?resource=download
