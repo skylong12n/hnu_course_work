@@ -27,7 +27,6 @@ def load_models():
 def preprocess_input_data(input_df, feature_columns):
     """
     预处理输入数据，创建虚拟变量并确保特征一致性。
-    注意：此函数不负责缩放，缩放由单独的scaler完成。
     """
     # 重命名列以匹配训练数据的格式
     column_mapping = {
